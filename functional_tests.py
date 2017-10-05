@@ -1,6 +1,6 @@
 import unittest
 from selenium import webdriver
-
+from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -15,20 +15,20 @@ class NewVisitorTest(unittest.TestCase):
 #Edith has heard about a new 'to_do' list apps so she goes at home page
         from time import sleep
         self.browser.get("http://localhost:8000")
-        sleep(2)
+        #sleep(2)
 #she noticed the page title mention to_do lists       
         self.assertIn('to-do', self.browser.title)
         header = self.browser.find_element_by_tag_name('h1')
         self.assertIn('to-do', header.text)
 
         inputbox = self.browser.find_element_by_id('id_new_item')
-        assertEqual(inputbox.getattribute('placeholder'),'Enter a to-do item')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
 
         inputbox.send_keys("buy peacock feathers")
         inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
 
         self.assertIn(
             "1: buy pecock feathers",
@@ -40,7 +40,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
 
         self.assertIn(
             "2: use peacock feathers to make a fly",
